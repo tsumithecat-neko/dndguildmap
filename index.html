@@ -16,7 +16,21 @@
     <script>
         // 1. 初始化地图（简单坐标系）
         const map = L.map('map', { crs: L.CRS.Simple, minZoom: -1 });
-
+        // 进阶技巧：点击地图获取精确坐标
+        map.on('click', function(e) {
+        // 获取点击位置的坐标
+        const lat = e.latlng.lat.toFixed(2);
+        const lng = e.latlng.lng.toFixed(2);
+    
+        // 1. 在浏览器控制台打印 (F12 查看)
+        console.log(`当前点击坐标: [${lat}, ${lng}]`);
+        
+        // 2. 在地图上弹出气泡显示坐标，方便直接复制
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(`坐标位置: [${lat}, ${lng}]`)
+            .openOn(map);
+        });
         // 2. 设定图片尺寸 (假设你的图片是 3000x2000，请按比例修改)
         const bounds = [[0, 0], [3185, 4763]]; 
         const image = L.imageOverlay('费伦大陆地图.png', bounds).addTo(map);
@@ -51,3 +65,4 @@
 </body>
 
 </html>
+
